@@ -44,8 +44,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
     try {
         await sendAdminEmail({
-            subject: `Product Offer from ${data.name}`,
-            formType: "Product Offer",
+            subject: `Offers Enquiry from ${data.name}`,
+            formType: "Offers Enquiry",
             data: {
                 Name: data.name,
                 Mobile: data.mobile,
@@ -57,13 +57,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         });
 
         return new Response(
-            JSON.stringify({ success: true, message: "Product Offer email sent successfully" }),
+            JSON.stringify({ success: true, message: "Offers Enquiry email sent successfully" }),
             { status: 200 }
         );
     } catch (error) {
         console.error("error on sending product Offer email", error);
         return new Response(
-            JSON.stringify({ success: false, message: "Failed to send Product Offer email" }),
+            JSON.stringify({ success: false, message: "Failed to send Offers Enquiry email" }),
             { status: 500 }
         );
     }

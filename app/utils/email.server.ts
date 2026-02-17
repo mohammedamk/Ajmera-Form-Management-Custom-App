@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 interface EmailOptions {
   subject: string;
   data: Record<string, any>;
-  formType: "Call Back" | "Product Enquiry" | "Service Enquiry"| "Contact Us" | "Applying Technician" | "Product Offer";
+  formType: "Call Back" | "Product Enquiry" | "Service Enquiry" | "Contact Us" | "Applying Technician" | "Offers Enquiry";
 }
 
 export async function sendAdminEmail({ subject, data, formType }: EmailOptions) {
@@ -71,8 +71,8 @@ export async function sendAdminEmail({ subject, data, formType }: EmailOptions) 
     </div>
   `;
 
-  console.log("htmlTemplate............> ", htmlTemplate);
-  return 
+  // console.log("htmlTemplate............> ", htmlTemplate);
+  return
   const mailOptions = {
     from: `"Website Leads" <${process.env.SMTP_USER}>`,
     to: process.env.ADMIN_EMAIL,

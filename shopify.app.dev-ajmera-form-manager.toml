@@ -2,7 +2,7 @@
 
 client_id = "52b2c05419fc3998e3a15e20eb2f5286"
 name = "Dev Ajmera Form Manager "
-application_url = "https://lodge-its-bidding-slight.trycloudflare.com"
+application_url = "https://qld-boxing-camps-traveller.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,10 +16,10 @@ api_version = "2026-04"
 scopes = "write_products"
 
 [auth]
-redirect_urls = [ "https://lodge-its-bidding-slight.trycloudflare.com/api/auth" ]
+redirect_urls = [ "https://qld-boxing-camps-traveller.trycloudflare.com/api/auth" ]
 
 [app_proxy]
-url = "https://lodge-its-bidding-slight.trycloudflare.com"
+url = "https://qld-boxing-camps-traveller.trycloudflare.com"
 subpath = "devAjmeraTyres"
 prefix = "apps"
 
