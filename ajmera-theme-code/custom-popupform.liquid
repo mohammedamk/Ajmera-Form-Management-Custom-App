@@ -1,147 +1,168 @@
 <style>
-  .custompopup-wrapper {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  border-radius: 12px;
-  overflow: hidden;
-  max-width: 900px;
-  margin: 0 auto;
-  background: #fff;
+      .custompopup-wrapper {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      }
+
+      .custompopup-image img {
+      width: 100%;
+      display: block;
+      height: auto;
+      }
+      .custompopup-form button.close-btn {
+      background: none;
+      border: none;
+      display: flex;
+      justify-content: end;
+      width: 100%;
+      cursor: pointer;
+      }
+      .custompopup-form {
+      background: #f4f4f4;
+      }
+
+      .custompopup-container {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      transform: translateY(-50%)
+      }
+      .custompopup-modal {
+      background: #121212bf;
+      position: fixed;
+      z-index: 999;
+      width: 100%;
+      height: 100%;
+      inset: 0;
+      }
+      .custompopup-image,.custompopup-form {
+      padding: 15px;
+      }
+      .custompopup-image h2 {
+      margin: 0;
+      letter-spacing: normal;
+      font-weight: 600;
+      color: #0f4989;
+      }
+
+      .custompopup-image p {
+      letter-spacing: normal;
+      margin: 0px 0 20px 0;
+      color:#000;
+      }
+      .custompopup-form .form-field label.label {
+      display: block;
+      color: #000;
+      letter-spacing: normal;
+      line-height: 100%;
+      font-weight: 600;
+      margin-bottom:10px;
+      }
+      span.markedrequired {
+      color: red;
+      }
+      .custompopup-form .form-field input,.custompopup-form textarea {
+      display: block;
+      border: none;
+      padding: 13px;
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      }
+      .custompopup-form button.submitbtn {
+      padding: 8px 24px;
+      border: none;
+      background: #0f4989;
+      color: #fff;
+      border-radius: 12px;
+      display: inline-block;
+      margin-top: 20px;
+      font-weight: 500;
+      letter-spacing: normal;
+      cursor: pointer;
+      }
+      .form-consent {
+      display: flex;
+      align-items: start;
+      gap: 5px;
+      }
+
+      .form-consent label {
+      letter-spacing: normal;
+      line-height: 100%;
+      display: inline-block;
+      font-size: 13px;
+      }
+      #{{section.settings.formids}}{
+      display:none;
+      }
+      .custompopup-form .form-field .radio-option label,.custompopup-form .form-field .radio-option input{
+      display:inline;
+      width:auto;
+      letter-spacing: normal;
+      color: #000;
+      font-size: 14px;
+      line-height: 100%;
+      margin: 0;
+      }
+      .radiooptionswrapper {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      margin-block: 20px;
+      }
+
+      .radio-option {
+      display: inline-flex;
+      align-items: start;
+      gap: 10px;
+      }
+      .field-error {
+      color: red;
+      font-size: 13px;
+      margin-top: -15px;
+      margin-bottom: 15px;
+      display: none;
+    }
+    .field-error.active {
+      display: block;
+    }
+    .form-success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: none;
   }
 
-  .custompopup-image img {
-  width: 100%;
-  display: block;
-  height: auto;
+  .form-success-message.active {
+    display: block;
   }
-  .custompopup-form button.close-btn {
-  background: none;
-  border: none;
-  display: flex;
-  justify-content: end;
-  width: 100%;
-  cursor: pointer;
-  }
-  .custompopup-form {
-  background: #f4f4f4;
-  }
-
-  .custompopup-container {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  transform: translateY(-50%)
-  }
-  .custompopup-modal {
-  background: #121212bf;
-  position: fixed;
-  z-index: 999;
-  width: 100%;
-  height: 100%;
-  inset: 0;
-  }
-  .custompopup-image,.custompopup-form {
-  padding: 15px;
-  }
-  .custompopup-image h2 {
-  margin: 0;
-  letter-spacing: normal;
-  font-weight: 600;
-  color: #0f4989;
-  }
-
-  .custompopup-image p {
-  letter-spacing: normal;
-  margin: 0px 0 20px 0;
-  color:#000;
-  }
-  .custompopup-form .form-field label.label {
-  display: block;
-  color: #000;
-  letter-spacing: normal;
-  line-height: 100%;
-  font-weight: 600;
-  margin-bottom:10px;
-  }
-  span.markedrequired {
-  color: red;
-  }
-  .custompopup-form .form-field input,.custompopup-form textarea {
-  display: block;
-  border: none;
-  padding: 13px;
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  }
-  .custompopup-form button.submitbtn {
-  padding: 8px 24px;
-  border: none;
-  background: #0f4989;
-  color: #fff;
-  border-radius: 12px;
-  display: inline-block;
-  margin-top: 20px;
-  font-weight: 500;
-  letter-spacing: normal;
-  cursor: pointer;
-  }
-  .form-consent {
-  display: flex;
-  align-items: start;
-  gap: 5px;
-  }
-
-  .form-consent label {
-  letter-spacing: normal;
-  line-height: 100%;
-  display: inline-block;
-  font-size: 13px;
-  }
-  #{{section.settings.formids}}{
-  display:none;
-  }
-  .custompopup-form .form-field .radio-option label,.custompopup-form .form-field .radio-option input{
-  display:inline;
-  width:auto;
-  letter-spacing: normal;
-  color: #000;
-  font-size: 14px;
-  line-height: 100%;
-  margin: 0;
-  }
-  .radiooptionswrapper {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  margin-block: 20px;
-  }
-
-  .radio-option {
-  display: inline-flex;
-  align-items: start;
-  gap: 10px;
-  }
-  @media(max-width: 991px) {
-  .custompopup-wrapper{
-  grid-template-columns: auto;
-  }
-  .custompopup-image img{
-  display:none;
-  }
-  .custompopup-modal {
-  overflow: auto;
-  }
-  .custompopup-image p{
-  margin:0;
-  }
-  .custompopup-form .form-field input, .custompopup-form textarea{
-  margin-bottom: 10px;
-  }
-  .custompopup-form .close-btn svg {
-  height: 20px;
-  width: 20px;
-  }
-  }
+      @media(max-width: 991px) {
+      .custompopup-wrapper{
+      grid-template-columns: auto;
+      }
+      .custompopup-image img{
+      display:none;
+      }
+      .custompopup-modal {
+      overflow: auto;
+      }
+      .custompopup-image p{
+      margin:0;
+      }
+      .custompopup-form .form-field input, .custompopup-form textarea{
+      margin-bottom: 10px;
+      }
+      .custompopup-form .close-btn svg {
+      height: 20px;
+      width: 20px;
+      }
+      }
 </style>
 
 <div class="custompopup-modal" id="{{ section.settings.formids }}">
@@ -226,6 +247,7 @@
                     type="{{ block.settings.input_type }}"
                     {% if block.settings.readonly == true %}
                       readonly
+                      value="{{ block.settings.placeholder }}"
                     {% endif %}
                     name="contact[{{ block.settings.label | handle }}]"
                     placeholder="{{ block.settings.placeholder }}"
@@ -234,6 +256,7 @@
                     {% endif %}
                   >
               {% endcase %}
+              <p class="field-error" data-error-for="{{ block.settings.label | handle }}"></p>
             </div>
           {% endfor %}
 
@@ -245,8 +268,9 @@
                 <span class="markedrequired">*</span></label
               >
             </div>
+            <p class="field-error" data-error-for="userconsent"></p>
           {% endif %}
-
+          <p class="form-success-message"></p>
           <button type="submit" class="submitbtn">
             {{ section.settings.button_text }}
           </button>

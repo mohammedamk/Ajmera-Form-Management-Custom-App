@@ -3,10 +3,12 @@ import { sendAdminEmail } from "app/utils/email.server";
 import { ActionFunctionArgs } from "react-router";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-    // await authenticate.public.appProxy(request);
+    await authenticate.public.appProxy(request);
     
     const body = await request.json();
     const data = body.data;
+
+    console.log("data................apply-technician", data);
 
     const errors: Record<string, string> = {};
 
@@ -19,15 +21,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }
 
     if (!data.mobile || !/^\d{10}$/.test(data.mobile.replace(/\D/g, ""))) {
-        errors.mobile = "10-digit mobile number is required.";
+        errors["mobile-number"] = "10-digit mobile number is required.";
     }
 
     if (!data.city || data.city.trim().length === 0) {
         errors.city = "City is required.";
     }
 
-    if (!data.applyingFor || data.applyingFor.trim().length === 0) {
-        errors.applyingFor = "The position title is required.";
+    if (!data.role || data.role.trim().length === 0) {
+        errors.role = "The position title is required.";
     }
 
     if (data.portfolio && !data.portfolio.startsWith("http")) {
@@ -43,10 +45,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
     try {
         await sendAdminEmail({
-            subject: `Job Application: ${data.applyingFor} from ${data.city}`,
-            formType: "Applying Technician Form",
+            subject: `Job Application: ${data.role} from ${data.city}`,
+            formType: "Applying Technician",
             data: {
-                "Position": data.applyingFor,
+                "Position": data.role,
                 "Candidate Name": data.name,
                 "Email": data.email,
                 "Mobile": data.mobile,
@@ -56,7 +58,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         });
 
         return new Response(
-            JSON.stringify({ success: true, message: "Application submitted successfully!" }), 
+            JSON.stringify({ success: true, message: "Application submitted successfully." }), 
             { status: 200, headers: { "Content-Type": "application/json" } }
         );
     } catch (error) {

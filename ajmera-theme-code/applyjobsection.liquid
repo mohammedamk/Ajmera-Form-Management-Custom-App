@@ -1,0 +1,230 @@
+<style>
+        .apply-job-section-{{ section.id }}{
+        background:#fff;
+        padding:32px 20px;
+        }
+        .apply-job-section-{{ section.id }} .apply-job-conatainer{
+        max-width: 1280px;
+        margin: 0 auto;
+        }
+        h1.ap-jb-mainh1 {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 1.33;
+        margin: 0;
+        letter-spacing: normal;
+        color: #171717;
+        }
+
+        h2.ap-jb-mainh2 {
+        color: #0f4989;
+        font-size: 16px;
+        margin: 0 0 20px 0;
+        font-weight: 600;
+        line-height: 24px;
+        letter-spacing: normal;
+        }
+        .ap-jb-description {
+        letter-spacing: normal;
+        color: #333;
+        }
+        .ap-jb-description h2 {
+        margin: 0;
+        color: #3498db;
+        }
+        .apply-job-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 32px;
+      }
+
+      .apply-job-infowrapper {grid-column: span 2 / span 2;}
+
+      .ap-jb-description a {
+          color: #036;
+          text-decoration: none;
+      }
+      .apply-form-header {
+        background: #0f4989;
+        color: #fff;
+        padding: 16px;
+        font-size: 20px;
+        letter-spacing: normal;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    .apply-form-card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 0 1px #000000a3;
+    }
+
+    .apply-form-body {
+        padding: 16px;
+    }
+
+    .apply-form-group label {
+        display: block;
+        font-weight: 600;
+        color: #000;
+        font-size: 14px;
+        letter-spacing: normal;
+        line-height: 28px;
+    }
+
+    .apply-form-group input {
+        border-radius: 12px;
+        border: 1px solid #ebe6e7;
+        padding: 12px 16px;
+        display: block;
+        width: 100%;
+        margin: 5px 0 16px 0;
+    }
+    button.apply-submit-btn {
+      border: none;
+      border-radius: 6px;
+      padding: 8px 20px;
+      background: #0f4989;
+      color: #fff;
+      font-weight: 500;
+      margin-top: 12px;
+      cursor: pointer;
+  }
+  .form-success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: none;
+  }
+
+  .form-success-message.active {
+    display: block;
+  }
+    .field-error {
+    display: none;
+    color: #d72c0d; /* Shopify red */
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: -10px;
+    margin-bottom: 12px;
+    padding-left: 2px;
+  }
+
+  .field-error.active {
+    display: block;
+  }
+
+       @media (max-width: 991px) {
+        .apply-job-grid {
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+        .apply-job-infowrapper {grid-column: auto;}
+       }
+</style>
+<section class="apply-job-section-{{ section.id }}">
+  <div class="apply-job-conatainer">
+    <div class="apply-job-grid">
+      <div class="apply-job-infowrapper">
+        <h1 class="ap-jb-mainh1">{{ section.settings.job_title }}</h1>
+        <h2 class="ap-jb-mainh2">{{ section.settings.job_location }}</h2>
+        <div class="ap-jb-description">{{ section.settings.job_description }}</div>
+      </div>
+      <div class="apply-job-formwrapper">
+        <div class="apply-form-card">
+          <div class="apply-form-header">Apply Now</div>
+
+          <div class="apply-form-body custompopup-modal" id="careers-apply-form">
+            <form id="careersApplyForm">
+              <div class="apply-form-group">
+                <label>Full Name</label>
+                <input type="text" name="contact[name]" required>
+                <p class="field-error" data-error-for="name"></p>
+              </div>
+
+              <div class="apply-form-group">
+                <label>Email</label>
+                <input type="email" name="contact[email]" required>
+                <p class="field-error" data-error-for="email"></p>
+              </div>
+
+              <div class="apply-form-group">
+                <label>Mobile</label>
+                <input type="tel" name="contact[mobile-number]" required>
+                <p class="field-error" data-error-for="mobile-number"></p>
+              </div>
+
+              <div class="apply-form-group">
+                <label>City</label>
+                <input type="text" name="contact[city]">
+                <p class="field-error" data-error-for="city"></p>
+              </div>
+
+              <div class="apply-form-group">
+                <label>Applying For</label>
+                <input type="text" name="contact[role]" value="{{ page.title }}" readonly>
+                <p class="field-error" data-error-for="role"></p>
+              </div>
+
+              <div class="apply-form-group">
+                <label>Portfolio Link</label>
+                <input type="url" name="contact[portfolio]">
+                <p class="field-error" data-error-for="portfolio"></p>
+              </div>
+
+              <p class="form-success-message"></p>
+
+              <button type="submit" class="apply-submit-btn">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // form submission
+    const form = document.getElementById('careersApplyForm');
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault(); // stop Shopify default submit
+      await handleFormSubmission(form);
+    });
+    // end
+  });
+</script>
+{% comment %} form submission {% endcomment %}
+<script src="{{ 'form-handle.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Apply Job Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "job_title",
+      "label": "Job Title",
+      "default": "Job Title"
+    },
+    {
+      "type": "text",
+      "id": "job_location",
+      "label": "Job Location",
+      "default": "Job Location"
+    },
+    {
+      "type": "richtext",
+      "id": "job_description",
+      "label": "Job Description",
+      "default": "<p>Job Description</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Apply Job Section"
+    }
+  ]
+}
+{% endschema %}

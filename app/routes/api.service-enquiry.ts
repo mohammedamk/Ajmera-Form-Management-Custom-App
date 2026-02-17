@@ -3,10 +3,12 @@ import { sendAdminEmail } from "app/utils/email.server";
 import { ActionFunctionArgs } from "react-router";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-    // const { session } = await authenticate.public.appProxy(request);
+    const { session } = await authenticate.public.appProxy(request);
     
     const body = await request.json();
     const data = body.data;
+
+    console.log("data................service-enquiry", data);
 
     const errors: Record<string, string> = {};
 
@@ -15,7 +17,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }
 
     if (!data.mobile || !/^\d{10}$/.test(data.mobile.replace(/\D/g, ""))) {
-        errors.mobile = "A valid 10-digit mobile number is required.";
+        errors["mobile-number"] = "A valid 10-digit mobile number is required.";
     }
 
     if (!data.email || !/^\S+@\S+\.\S+$/.test(data.email)) {
@@ -43,7 +45,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
     try {
         await sendAdminEmail({
-            subject: `Service Enquiry: ${data.service}`,
+            subject: `Service Enquiry from ${data.name}`,
             formType: "Service Enquiry",
             data: {
                 "Service Requested": data.service,

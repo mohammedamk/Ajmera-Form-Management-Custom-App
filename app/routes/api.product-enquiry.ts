@@ -7,6 +7,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const body = await request.json();
   const data = body.data;
 
+  console.log("data................product-enquiry", data);
+
   const errors: Record<string, string> = {};
 
   if (!data.name || data.name.trim().length < 2) {
@@ -14,7 +16,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   if (!data.mobile || !/^\d{10}$/.test(data.mobile.replace(/\D/g, ""))) {
-    errors.mobile = "A valid 10-digit mobile number is required.";
+    errors["mobile-number"] = "A valid 10-digit mobile number is required.";
   }
 
   if (!data.email || !/^\S+@\S+\.\S+$/.test(data.email)) {
@@ -42,7 +44,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   try {
     await sendAdminEmail({
-      subject: `Enquiry for ${data.product}`,
+      subject: `Product Enquiry from ${data.name}`,
       formType: "Product Enquiry",
       data: {
         Name: data.name,

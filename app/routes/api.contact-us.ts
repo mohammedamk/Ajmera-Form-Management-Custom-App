@@ -6,7 +6,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const { session } = await authenticate.public.appProxy(request);
     const body = await request.json();
     const data = body.data;
-    console.log("data................", data);
+    console.log("data................contact-us", data);
     const errors: Record<string, string> = {};
 
     if (!data.name || data.name.trim().length < 2) {
@@ -18,7 +18,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }
 
     if (!data.mobile || !/^\d{10}$/.test(data.mobile.replace(/\D/g, ""))) {
-        errors.mobile = "A valid 10-digit mobile number is required.";
+        errors["mobile-number"] = "A valid 10-digit mobile number is required.";
     }
 
     if (!data.city || data.city.trim().length === 0) {
@@ -45,7 +45,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
     try {
         await sendAdminEmail({
-            subject: `Call back for ${data.city}`,
+            subject: `Contact Us - ${data.name}`,
             formType: "Contact Us",
             data: {
                 Name: data.name,
@@ -58,15 +58,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         });
 
         return new Response(
-            JSON.stringify({ success: true, message: "Call back email sent successfully" }),
+            JSON.stringify({ success: true, message: "Contact us email sent successfully" }),
             {
                 status: 200
             }
         );
     } catch (error) {
-        console.error("error on sending call back email", error);
+        console.error("error on sending contact us email", error);
         return new Response(
-            JSON.stringify({ success: false, message: "Failed to send Call back email" }),
+            JSON.stringify({ success: false, message: "Failed to send contact us email" }),
             {
                 status: 500
             }
