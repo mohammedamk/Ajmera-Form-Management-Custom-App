@@ -129,7 +129,7 @@ async function handleFormSubmission(form) {
   console.log("Sending API:", api);
   if (payload && api){
     try {
-      const response = await fetch(`/apps/devAjmeraTyres/${api}`, {
+      const response = await fetch(`/apps/ajmeraTyres/${api}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

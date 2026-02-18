@@ -1,9 +1,12 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "52b2c05419fc3998e3a15e20eb2f5286"
-name = "Dev Ajmera Form Manager "
-application_url = "https://responsible-rebate-declared-webpage.trycloudflare.com"
+client_id = "ef70e2c3f9596ad4cea9391bb48b6d4d"
+name = "Ajmera Form Manager"
+application_url = "https://app.ajmeratyres.com"
 embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
 
 [webhooks]
 api_version = "2026-04"
@@ -17,14 +20,9 @@ api_version = "2026-04"
 scopes = "write_products"
 
 [auth]
-redirect_urls = [
-  "https://responsible-rebate-declared-webpage.trycloudflare.com/api/auth"
-]
+redirect_urls = [ "https://app.ajmeratyres.com/api/auth" ]
 
 [app_proxy]
-url = "https://responsible-rebate-declared-webpage.trycloudflare.com"
-subpath = "devAjmeraTyres"
+url = "https://app.ajmeratyres.com"
+subpath = "ajmeraTyres"
 prefix = "apps"
-
-[build]
-automatically_update_urls_on_dev = true
