@@ -115,6 +115,28 @@
   .field-error.active {
     display: block;
   }
+  .custom-submit-loader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    animation: customSpinLoader 0.6s linear infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes customSpinLoader {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .common-submit-btn.is-loading {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
 
        @media (max-width: 991px) {
         .apply-job-grid {
@@ -175,7 +197,7 @@
 
               <p class="form-success-message"></p>
 
-              <button type="submit" class="apply-submit-btn">Submit</button>
+              <button type="submit" class="apply-submit-btn common-submit-btn">Submit</button>
             </form>
           </div>
         </div>

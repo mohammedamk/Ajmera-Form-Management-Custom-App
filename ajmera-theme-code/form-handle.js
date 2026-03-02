@@ -1,5 +1,16 @@
 async function handleFormSubmission(form) {
 
+  const submitBtn = form.querySelector(".common-submit-btn");
+  const originalBtnText = submitBtn.innerHTML;
+
+  // adding loader + disable button
+  submitBtn.disabled = true;
+  submitBtn.classList.add("is-loading");
+  submitBtn.innerHTML = `
+    <span class="custom-submit-loader"></span>
+    Submitting...
+  `;
+
   const popupId = form.closest(".custompopup-modal").id;
   console.log("Popup Submitted:", popupId);
 
@@ -156,6 +167,11 @@ async function handleFormSubmission(form) {
   
     } catch (error) {
       console.error("Error while processing form:", error);
+    } finally {
+      // always removing loader
+      submitBtn.disabled = false;
+      submitBtn.classList.remove("is-loading");
+      submitBtn.innerHTML = originalBtnText;
     }
   }
 }
