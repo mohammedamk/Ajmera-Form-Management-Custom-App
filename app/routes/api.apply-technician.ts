@@ -8,7 +8,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const body = await request.json();
     const data = body.data;
 
-    console.log("data................apply-technician", data);
+    // console.log("data................apply-technician", data);
 
     const errors: Record<string, string> = {};
 
@@ -32,7 +32,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         errors.role = "The position title is required.";
     }
 
-    if (data.portfolio && !data.portfolio.startsWith("http")) {
+    if (!data.portfolio || !data.portfolio.startsWith("http")) {
         errors.portfolio = "Please provide a valid URL starting with http/https.";
     }
 

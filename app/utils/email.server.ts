@@ -1,14 +1,28 @@
 import nodemailer from "nodemailer";
 
+// console.log("process.env.SMTP_HOST", process.env.SMTP_HOST)
+// console.log("process.env.SMTP_PORT", process.env.SMTP_PORT)
+// console.log("process.env.SMTP_USER", process.env.SMTP_USER)
+// console.log("process.env.SMTP_PASS", process.env.SMTP_PASS)
+
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: false,
+  host: process.env.SMTP_HOST, // Hardcode this briefly to test
+  port: 465,
+  secure: true, 
+  family: 4, // THIS IS THE KEY: Forces IPv4 like Zoho likely uses
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
+  debug: true, // Keep this on to see the new logs
+  logger: true,
+  tls: {
+    // Gmail is picky; sometimes it needs the servername explicitly set
+    servername: 'smtp.gmail.com',
+    rejectUnauthorized: false,
+  },
 });
+
 
 interface EmailOptions {
   subject: string;
@@ -60,7 +74,7 @@ export async function sendAdminEmail({ subject, data, formType }: EmailOptions) 
         ${customerEmail ? `
         <div style="margin-top: 35px; padding-top: 25px; border-top: 1px solid #eeeeee; text-align: center;">
           <a href="mailto:${customerEmail}?subject=Re: ${subject}" style="background-color: #004a99; color: #ffffff; padding: 14px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; font-size: 16px;">
-            Quick Reply to Customer
+            Quick Reply
           </a>
         </div>` : ''}
       </div>
@@ -71,8 +85,6 @@ export async function sendAdminEmail({ subject, data, formType }: EmailOptions) 
     </div>
   `;
 
-  // console.log("htmlTemplate............> ", htmlTemplate);
-  return
   const mailOptions = {
     from: `"Website Leads" <${process.env.SMTP_USER}>`,
     to: process.env.ADMIN_EMAIL,
@@ -80,5 +92,16 @@ export async function sendAdminEmail({ subject, data, formType }: EmailOptions) 
     html: htmlTemplate,
   };
 
-  return transporter.sendMail(mailOptions);
+  try {
+    // console.log("process.env.SMTP_USER", process.env.SMTP_USER)
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully!");
+    console.log(`Message ID: ${info.messageId}`);
+    console.log(`Recipient: ${process.env.ADMIN_EMAIL}`);
+    return info;
+  } catch (error) {
+    console.error("Failed to send email:");
+    console.error(error);
+    throw error;
+  }
 }
