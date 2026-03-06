@@ -2,7 +2,7 @@
 
 client_id = "300b3f6b068bb1800c474480a7bf3446"
 name = "Ajmera Form Manager"
-application_url = "https://example.com"
+application_url = "https://reasonably-carb-temporarily-guestbook.trycloudflare.com"
 embedded = true
 
 [build]
@@ -11,9 +11,18 @@ automatically_update_urls_on_dev = true
 [webhooks]
 api_version = "2026-04"
 
+[[webhooks.subscriptions]]
+topics = [ "app/uninstalled" ]
+uri = "/webhooks/app/uninstalled"
+
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "write_products"
 
+[app_proxy]
+url = "https://reasonably-carb-temporarily-guestbook.trycloudflare.com"
+subpath = "devAjmeraTyres"
+prefix = "apps"
+
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://reasonably-carb-temporarily-guestbook.trycloudflare.com/api/auth" ]

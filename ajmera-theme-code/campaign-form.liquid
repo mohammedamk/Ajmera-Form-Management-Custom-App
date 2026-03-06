@@ -1,0 +1,266 @@
+<style>
+   .campaign-form-wrapper {
+    padding: 60px 10px;
+    background: #ffffff;
+  }
+
+  .campaign-form {
+    margin: 0 auto;
+  }
+
+  .form-section {
+    background: #f3f6fb;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+
+  .form-section h2 {
+    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e3a8a;
+  }
+
+  .form-section h2 span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+  }
+
+  .form-grid {
+    display: grid;
+    gap: 22px;
+  }
+
+  .three-col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .field input,
+  .field select {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #f9fafb;
+    transition: all 0.2s ease;
+  }
+
+  .field input:focus,
+  .field select:focus {
+    border-color: #2563eb;
+    background: #fff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+  }
+
+  .field small {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .campaign-form .field {
+      position: relative;
+      width: 100%;
+      display: flex;
+      transition: box-shadow var(--duration-short) ease;
+      flex-direction: column;
+  }
+
+  .vehicle-box {
+    background: #f9fafb;
+    padding: 22px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .vehicle-box h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #1e3a8a;
+  }
+
+  .primary-btn {
+    background: #1e3a8a;
+    color: #fff;
+    padding: 14px 30px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s ease;
+  }
+
+  .primary-btn:hover {
+    background: #163177;
+  }
+
+  .note {
+    font-size: 12px;
+    margin-top: 12px;
+    color: #6b7280;
+  }
+
+  .form-section .field:hover.field:after,
+  .form-section .field:after {
+    box-shadow: none;
+  }
+
+  @media(max-width: 992px){
+    .three-col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media(max-width: 600px){
+    .three-col {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .form-section {
+      padding: 20px;
+    }
+  }
+</style>
+
+<div class="campaign-form-wrapper page-width">
+  <form method="post" action="/contact#campaign-form" id="campaign-form" class="campaign-form">
+    <!-- Customer Information -->
+    <div class="form-section">
+      <h2>Customer Information</h2>
+      <div class="form-grid three-col">
+        <div class="field">
+          <label>Customer Name</label>
+          <input type="text" name="contact[name]" placeholder="Full Name" required>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="contact[email]" placeholder="Enter Email id" required>
+        </div>
+        <div class="field">
+          <label>Mobile Number</label>
+          <input type="tel" name="contact[phone]" placeholder="Enter mobile number" maxlength="10" required>
+          <small>Enter 10 Digit Character</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vehicle Details -->
+    <div class="form-section">
+      <h2>Vehicle Details <span>(Max 5 Vehicles)</span></h2>
+
+      <div class="field">
+        <label>No of Vehicle</label>
+        <select id="vehicle-count">
+          {% for i in (1..5) %}
+            <option value="{{ i }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div id="vehicle-wrapper">
+        {% for i in (1..5) %}
+          <div
+            class="vehicle-box"
+            data-vehicle="{{ i }}"
+            {% if i > 1 %}
+              style="display:none"
+            {% endif %}
+          >
+            <h3>Vehicle {{ i }}</h3>
+            <div class="form-grid three-col">
+              <div class="field">
+                <label>Vehicle Number</label>
+                <input type="text" name="contact[vehicle_number_{{ i }}]" placeholder="e.g. MH05GH2456" maxlength="10">
+                <small>Enter Exactly 10 Character</small>
+              </div>
+              <div class="field">
+                <label>Vehicle Make</label>
+                <input type="text" name="contact[vehicle_make_{{ i }}]" placeholder="e.g. Maruti, Hyundai">
+              </div>
+              <div class="field">
+                <label>Vehicle Model</label>
+                <input type="text" name="contact[vehicle_model_{{ i }}]" placeholder="e.g. Swift, Creta">
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Date & Store Selection -->
+    <div class="form-section">
+      <h2>Date & Store Selection</h2>
+      <div class="form-grid three-col">
+        <div class="field">
+          <label>Select Date</label>
+          <input type="date" name="contact[booking_date]" required>
+        </div>
+        <div class="field">
+          <label>Select City</label>
+          <select name="contact[city]" id="city-select" required>
+            <option value="">Select City</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Select Store</label>
+          <select name="contact[store]" id="store-select" required>
+            <option value="">Select Store</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" id="show-cost-btn" class="primary-btn">Show Total Cost</button>
+    <div id="price-wrapper" style="display:none;margin-top:15px;">
+      <h3>Total Cost: ₹<span id="total-price">0</span></h3>
+      <button type="button" id="pay-now-btn" class="primary-btn">Pay Now</button>
+    </div>
+    <p class="note">Cost inclusive of GST Weight as per actual will be charged extra</p>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('vehicle-count');
+    const boxes = document.querySelectorAll('.vehicle-box');
+
+    select.addEventListener('change', function () {
+      const value = parseInt(this.value);
+      boxes.forEach((box, index) => {
+        box.style.display = index < value ? 'block' : 'none';
+      });
+    });
+  });
+</script>
+
+<script src="{{ 'campaign-form.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Campaign Booking Form",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Campaign Booking Form"
+    }
+  ]
+}
+{% endschema %}
