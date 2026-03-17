@@ -1,5 +1,5 @@
 <style>
-   .campaign-form-wrapper {
+  .campaign-form-wrapper {
     padding: 60px 10px;
     background: #ffffff;
   }
@@ -13,7 +13,7 @@
     padding: 30px;
     border-radius: 10px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   }
 
   .form-section h2 {
@@ -63,7 +63,7 @@
     border-color: #2563eb;
     background: #fff;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   }
 
   .field small {
@@ -74,11 +74,11 @@
   }
 
   .campaign-form .field {
-      position: relative;
-      width: 100%;
-      display: flex;
-      transition: box-shadow var(--duration-short) ease;
-      flex-direction: column;
+    position: relative;
+    width: 100%;
+    display: flex;
+    transition: box-shadow var(--duration-short) ease;
+    flex-direction: column;
   }
 
   .vehicle-box {
@@ -123,13 +123,13 @@
     box-shadow: none;
   }
 
-  @media(max-width: 992px){
+  @media (max-width: 992px) {
     .three-col {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media(max-width: 600px){
+  @media (max-width: 600px) {
     .three-col {
       grid-template-columns: repeat(1, 1fr);
     }
@@ -141,7 +141,13 @@
 </style>
 
 <div class="campaign-form-wrapper page-width">
-  <form method="post" action="/contact#campaign-form" id="campaign-form" class="campaign-form">
+  <form
+    method="post"
+    action="/contact#campaign-form"
+    id="campaign-form"
+    class="campaign-form"
+    data-rzp-key="{{ section.settings.razorpay_key_id }}"
+  >
     <!-- Customer Information -->
     <div class="form-section">
       <h2>Customer Information</h2>
@@ -232,6 +238,7 @@
     <div id="price-wrapper" style="display:none;margin-top:15px;">
       <h3>Total Cost: ₹<span id="total-price">0</span></h3>
       <button type="button" id="pay-now-btn" class="primary-btn">Pay Now</button>
+      <div id="form-message"></div>
     </div>
     <p class="note">Cost inclusive of GST Weight as per actual will be charged extra</p>
   </form>
@@ -251,12 +258,20 @@
   });
 </script>
 
+<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
 <script src="{{ 'campaign-form.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
   "name": "Campaign Booking Form",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "razorpay_key_id",
+      "label": "Razorpay Key ID",
+      "info": "Enter your Razorpay publishable key (starts with rzp_live_ or rzp_test_). Found in Razorpay Dashboard → Settings → API Keys."
+    }
+  ],
   "presets": [
     {
       "name": "Campaign Booking Form"

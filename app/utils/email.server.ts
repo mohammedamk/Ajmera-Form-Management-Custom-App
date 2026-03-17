@@ -8,7 +8,7 @@ import nodemailer from "nodemailer";
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST, // Hardcode this briefly to test
   port: 465,
-  secure: true, 
+  secure: true,
   family: 4, // THIS IS THE KEY: Forces IPv4 like Zoho likely uses
   auth: {
     user: process.env.SMTP_USER,
@@ -27,7 +27,7 @@ const transporter = nodemailer.createTransport({
 interface EmailOptions {
   subject: string;
   data: Record<string, any>;
-  formType: "Call Back" | "Product Enquiry" | "Service Enquiry" | "Contact Us" | "Applying Technician" | "Offers Enquiry";
+  formType: "Call Back" | "Product Enquiry" | "Service Enquiry" | "Contact Us" | "Applying Technician" | "Offers Enquiry" | "Campaign Booking";
 }
 
 export async function sendAdminEmail({ subject, data, formType }: EmailOptions) {
