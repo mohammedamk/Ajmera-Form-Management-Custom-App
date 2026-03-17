@@ -11,18 +11,20 @@ automatically_update_urls_on_dev = true
 [webhooks]
 api_version = "2026-04"
 
-[[webhooks.subscriptions]]
-topics = [ "app/uninstalled" ]
-uri = "/webhooks/app/uninstalled"
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "write_products,read_content,write_content,read_online_store_navigation,write_online_store_navigation"
+
+[auth]
+redirect_urls = [
+  "https://reasonably-carb-temporarily-guestbook.trycloudflare.com/api/auth"
+]
 
 [app_proxy]
 url = "https://reasonably-carb-temporarily-guestbook.trycloudflare.com"
 subpath = "devAjmeraTyres"
 prefix = "apps"
-
-[auth]
-redirect_urls = [ "https://reasonably-carb-temporarily-guestbook.trycloudflare.com/api/auth" ]
