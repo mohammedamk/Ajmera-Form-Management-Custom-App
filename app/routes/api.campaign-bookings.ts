@@ -12,8 +12,8 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
   try {
     await authenticate.admin(request);
     const body = await request.json();
-    console.log("body................", body);
-    
+    // console.log("body................", body);
+
     const page = Math.max(parseInt(body.page || "1", 10), 1);
     const limit = Math.max(parseInt(body.limit || `${DEFAULT_LIMIT}`, 10), 1);
     const search = (body.search || "").trim();
@@ -21,25 +21,25 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
 
     const query = search
       ? {
-          $or: [
-            { name: { $regex: escapeRegex(search), $options: "i" } },
-            { email: { $regex: escapeRegex(search), $options: "i" } },
-            { mobile: { $regex: escapeRegex(search), $options: "i" } },
-            { city: { $regex: escapeRegex(search), $options: "i" } },
-            { store: { $regex: escapeRegex(search), $options: "i" } },
-            { date: { $regex: escapeRegex(search), $options: "i" } },
-            { status: { $regex: escapeRegex(search), $options: "i" } },
-            { razorpay_order_id: { $regex: escapeRegex(search), $options: "i" } },
-            { razorpay_payment_id: { $regex: escapeRegex(search), $options: "i" } },
-          ],
-        }
+        $or: [
+          { name: { $regex: escapeRegex(search), $options: "i" } },
+          { email: { $regex: escapeRegex(search), $options: "i" } },
+          { mobile: { $regex: escapeRegex(search), $options: "i" } },
+          { city: { $regex: escapeRegex(search), $options: "i" } },
+          { store: { $regex: escapeRegex(search), $options: "i" } },
+          { date: { $regex: escapeRegex(search), $options: "i" } },
+          { status: { $regex: escapeRegex(search), $options: "i" } },
+          { razorpay_order_id: { $regex: escapeRegex(search), $options: "i" } },
+          { razorpay_payment_id: { $regex: escapeRegex(search), $options: "i" } },
+        ],
+      }
       : {};
 
     const [items, total] = await Promise.all([
       CampaignBooking.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
       CampaignBooking.countDocuments(query),
     ]);
-    console.log("items................", items);
+    // console.log("items................", items);
 
     return new Response(
       JSON.stringify({

@@ -192,6 +192,9 @@ export default function CampaignBookingsPage() {
     submit(formData, { method: "post" });
   };
 
+  const capitalizeFirstLetter = (str: string) =>
+    str ? str.charAt(0).toUpperCase() + str.slice(1) : "";
+
   return (
     <s-page heading="Campaign Bookings">
       <div
@@ -281,8 +284,12 @@ export default function CampaignBookingsPage() {
                     <s-table-cell>{formatCurrency(booking.amount)}</s-table-cell>
                     <s-table-cell>
                       <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                        <s-text>{booking.status}</s-text>
-                        <s-text>{booking.emailSent ? "Email sent" : "Email pending"}</s-text>
+                        <s-text>
+                          {booking.status === "pending" ? "Canceled" : capitalizeFirstLetter(booking.status)}
+                        </s-text>
+                        <s-text>
+                          {booking.emailSent ? "Email Sent" : "Email Not Sent"}
+                        </s-text>
                       </div>
                     </s-table-cell>
                     <s-table-cell>
@@ -335,7 +342,7 @@ export default function CampaignBookingsPage() {
                 <s-text>Store: {selectedBooking.store}</s-text>
                 <s-text>Vehicles: {selectedBooking.numVehicles}</s-text>
                 <s-text>Amount: {formatCurrency(selectedBooking.amount)}</s-text>
-                <s-text>Status: {selectedBooking.status}</s-text>
+                <s-text>Status: {selectedBooking.status === "pending" ? "Canceled" : capitalizeFirstLetter(selectedBooking.status)}</s-text>
                 <s-text>Email Sent: {selectedBooking.emailSent ? "Yes" : "No"}</s-text>
                 <s-text>Created At: {formatDateTime(selectedBooking.createdAt)}</s-text>
               </div>

@@ -4,7 +4,7 @@ import { authenticate } from "app/shopify.server";
 
 const CAMPAIGN_PAGE_TITLE = "Campaign Booking";
 const CAMPAIGN_PAGE_HANDLE = "campaign-booking";
-const CAMPAIGN_MENU_ID = "gid://shopify/Menu/232325841134";
+const CAMPAIGN_MENU_ID = process.env.CAMPAIGN_MENU_ID;
 
 type AdminGraphQLClient = {
   graphql: (query: string, options?: Record<string, unknown>) => Promise<Response>;
